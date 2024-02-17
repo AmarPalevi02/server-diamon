@@ -23,7 +23,6 @@ const categoriesRoute = require('./app/categories/router')
 
 // version
 // const v1 = '/v1'
-
 app.use(dashboardRoute)
 app.use(categoriesRoute)
 
