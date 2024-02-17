@@ -18,12 +18,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminlte', express.static(path.join(__dirname, '/node_modules/admin-lte')))
 
 // route
+const dashboardRoute = require('./app/dashboard/route')
 const categoriesRoute = require('./app/categories/router')
 
 // version
-const v1 = '/v1'
+// const v1 = '/v1'
 
-app.use(`${v1}/cms`, categoriesRoute)
+app.use(dashboardRoute)
+app.use(categoriesRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
