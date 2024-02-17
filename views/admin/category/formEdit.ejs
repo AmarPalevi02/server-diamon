@@ -1,0 +1,19 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Edit Catgory <%= category.name %>
+        </h3>
+    </div>
+    <form action="/category/update/<%= category._id%>?_method=PUT" method="POST">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Masukan Category</label>
+                <input type="text" value="<%= category.name %>" name="name" class="form-control" id="_id"
+                    placeholder="Enter Category">
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
