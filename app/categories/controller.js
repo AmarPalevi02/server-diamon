@@ -1,8 +1,11 @@
-const { createCategory } = require('../services/category')
+const { createCategory, categoryAll } = require('../services/category')
 
 const index = async (req, res) => {
     try {
-        res.render('admin/category/viewCategory');
+        const categories = await categoryAll()
+        res.render('admin/category/viewCategory', {
+            categories
+        });
     } catch (error) {
         console.log(error)
     }

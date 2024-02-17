@@ -1,5 +1,15 @@
 const Category = require('../categories/model')
 
+const categoryAll = async () => {
+    try {
+        const result = await Category.find()
+
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const createCategory = async (req) => {
     try {
         const { name } = req.body
@@ -13,5 +23,6 @@ const createCategory = async (req) => {
 }
 
 module.exports = {
-    createCategory
+    createCategory,
+    categoryAll
 }
