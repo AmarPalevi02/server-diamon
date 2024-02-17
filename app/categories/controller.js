@@ -57,10 +57,23 @@ const actionUpdate = async (req, res) => {
     }
 }
 
+const actionDelete = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        await Category.findOneAndDelete({ _id: id })
+
+        res.redirect('/category')
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     index,
     create,
     actionCreate,
     update,
-    actionUpdate
+    actionUpdate,
+    actionDelete
 }
