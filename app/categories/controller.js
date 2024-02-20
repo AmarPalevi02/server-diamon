@@ -7,7 +7,6 @@ const index = async (req, res) => {
         const alertStatus = req.flash('alertStatus')
 
         const alert = { message: alertMessage, status: alertStatus }
-        console.log(alert)
         const categories = await categoryAll()
         res.render('admin/category/viewCategory', {
             categories,
@@ -93,7 +92,7 @@ const actionDelete = async (req, res) => {
         }
 
         res.redirect('/category')
-        
+
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', danger)
