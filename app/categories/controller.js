@@ -1,14 +1,23 @@
-const { createCategory, categoryAll, updateCategory } = require('../services/category')
+const { createCategory, categoryAll } = require('../services/category')
 const Category = require('./model')
 
 const index = async (req, res) => {
     try {
+        const alertMessage = req.flash('alertMessage')
+        const alertStatus = req.flash('alertStatus')
+
+        const alert = { message: alertMessage, status: alertStatus }
+        console.log(alert)
         const categories = await categoryAll()
         res.render('admin/category/viewCategory', {
-            categories
+            categories,
+            alert
         });
+
     } catch (error) {
-        console.log(error)
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 
@@ -16,7 +25,9 @@ const create = async (req, res) => {
     try {
         res.render('admin/category/create');
     } catch (error) {
-        console.log(error)
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 
@@ -25,7 +36,9 @@ const actionCreate = async (req, res) => {
         await createCategory(req)
         res.redirect('/category')
     } catch (error) {
-        console.log(error)
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 
@@ -37,7 +50,9 @@ const update = async (req, res) => {
 
         res.render('admin/category/edit', { category })
     } catch (error) {
-        console.log(error)
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 
@@ -51,9 +66,15 @@ const actionUpdate = async (req, res) => {
             { name }
         )
 
-        res.redirect('/category')
-    } catch (error) {
+        req.flash('alertMessage', `Berhasil Update Category ${name}`)
+        req.flash("alertStatus", "primary")
 
+        res.redirect('/category')
+
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 
@@ -61,11 +82,22 @@ const actionDelete = async (req, res) => {
     try {
         const { id } = req.params
 
-        await Category.findOneAndDelete({ _id: id })
+        const getOne = await Category.findOne({ _id: id })
+        if (getOne) {
+            const getOneName = getOne.name
+
+            req.flash('alertMessage', `Berhasil Update Category ${getOneName} `)
+            req.flash("alertStatus", "danger")
+
+            await Category.findOneAndDelete({ _id: id })
+        }
 
         res.redirect('/category')
+        
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/category')
     }
 }
 

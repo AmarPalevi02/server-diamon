@@ -4,12 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const methodOverride = require('method-override')
+const session = require('express-session')
+const flash = require('connect-flash');
+
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {}
+}))
+app.use(flash());
 
 app.use(methodOverride('_method'))
 app.use(logger('dev'));
@@ -25,8 +36,8 @@ const categoriesRoute = require('./app/categories/router')
 
 // version
 // const v1 = '/v1'
-app.use( dashboardRoute)
-app.use( categoriesRoute)
+app.use(dashboardRoute)
+app.use(categoriesRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
