@@ -2,7 +2,7 @@
     <div class="card-header">
         <h3 class="card-title">Edit Nominal</h3>
     </div>
-    <form action="/nominal/create" method="POST">
+    <form action="/nominal/update/<%= nominals._id%>?_method=PUT" method="POST">
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">Masukan Coin Name</label>

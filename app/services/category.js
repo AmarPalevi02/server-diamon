@@ -16,7 +16,7 @@ const createCategory = async (req) => {
 
         const result = await Category.create({ name })
         req.flash('alertMessage', `Berhasil Tambah Category ${name}`)
-        req.flash("alertStatus", "success")
+        req.flash("alertStatus", "primary")
 
         return result
     } catch (error) {

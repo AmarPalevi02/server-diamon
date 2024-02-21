@@ -9,6 +9,7 @@ const index = async (req, res) => {
         const alert = { message: alertMessage, status: alertStatus }
 
         const nominals = await getAll()
+        
         res.render('admin/nominal/viewNominal', {
             nominals,
             alert
@@ -39,11 +40,34 @@ const actionCreat = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
 
-        const nominals = await Nominal.findOne({_id:id})
+        const nominals = await Nominal.findOne({ _id: id })
 
-        res.render('admin/nominal/edit', {nominals})
+        res.render('admin/nominal/edit', { nominals })
+    } catch (error) {
+
+    }
+}
+
+const actionUpdate = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { coinQuantity, coinName, price } = req.body
+
+        await Nominal.findOneAndUpdate(
+            { _id: id },
+            {
+                coinQuantity,
+                coinName,
+                price
+            }
+        )
+
+        req.flash('alertMessage', `Berhasil Update Nominal ${coinName}`)
+        req.flash('alertStatus', "primary")
+
+        res.redirect('/nominal')
     } catch (error) {
 
     }
@@ -53,5 +77,6 @@ module.exports = {
     index,
     create,
     actionCreat,
-    update
+    update,
+    actionUpdate
 }
