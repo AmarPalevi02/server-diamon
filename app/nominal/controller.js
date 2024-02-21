@@ -9,13 +9,15 @@ const index = async (req, res) => {
         const alert = { message: alertMessage, status: alertStatus }
 
         const nominals = await getAll()
-        
+
         res.render('admin/nominal/viewNominal', {
             nominals,
             alert
         })
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/nominal')
     }
 }
 
@@ -23,7 +25,9 @@ const create = async (req, res) => {
     try {
         res.render('admin/nominal/create')
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/nominal')
     }
 }
 
@@ -34,7 +38,9 @@ const actionCreat = async (req, res) => {
         res.redirect('/nominal')
 
     } catch (error) {
-        console.log(error)
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/nominal')
     }
 }
 
@@ -46,7 +52,9 @@ const update = async (req, res) => {
 
         res.render('admin/nominal/edit', { nominals })
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/nominal')
     }
 }
 
@@ -69,7 +77,31 @@ const actionUpdate = async (req, res) => {
 
         res.redirect('/nominal')
     } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', danger)
+        res.redirect('/nominal')
+    }
+}
 
+const actionDelete = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const getOne = await Nominal.findOne({ _id: id })
+
+        if (getOne) {
+            const nominalName = getOne.coinName
+
+            req.flash('alertMessage', `Berhasil Delete Nominal ${nominalName}`)
+            req.flash('alertStatus', "danger")
+
+            await Nominal.findOneAndDelete({ _id: id })
+        }
+        res.redirect('/nominal')
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', "danger")
+        res.redirect('/nominal')
     }
 }
 
@@ -78,5 +110,6 @@ module.exports = {
     create,
     actionCreat,
     update,
-    actionUpdate
+    actionUpdate,
+    actionDelete
 }
