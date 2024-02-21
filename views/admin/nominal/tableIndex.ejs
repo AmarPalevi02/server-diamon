@@ -2,22 +2,30 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Name</th>
+            <th>Coin Name</th>
+            <th>Coin Quantitiy</th>
+            <th>Price</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        <!-- <% for(let i=0; i < categories.length; i++ ) { %>
+        <% for(let i=0; i < nominals.length; i++ ) { %>
             <tr>
                 <td>
                     <%= i + 1 %>
                 </td>
                 <td>
-                    <%= categories[i].name %>
+                    <%= nominals[i].coinName %>
                 </td>
                 <td>
-                    <form action="/category/delete/<%= categories[i]._id %>?_method=DELETE" method="POST">
-                        <a href="/category/update/<%= categories[i]._id %>" class="btn btn-warning">
+                    <%= nominals[i].coinQuantity %>
+                </td>
+                <td>
+                    <%= nominals[i].price %>
+                </td>
+                <td>
+                    <form action="/nominal/delete/<%= nominals[i]._id %>?_method=DELETE" method="POST">
+                        <a href="/nominal/update/<%= nominals[i]._id %>" class="btn btn-warning">
                             <i class="fas fa-pencil-alt"></i>
                             Ubah
                         </a>
@@ -28,6 +36,6 @@
                     </form>
                 </td>
             </tr>
-            <% } %> -->
+            <% } %>
     </tbody>
 </table>

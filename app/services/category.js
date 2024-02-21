@@ -2,9 +2,9 @@ const Category = require('../categories/model')
 
 const categoryAll = async () => {
     try {
-        const result = await Category.find()
+        const nominals = await Category.find()
 
-        return result
+        return nominals
     } catch (error) {
         console.log(error)
     }

@@ -3,8 +3,16 @@ const { getAll, createNominal } = require('../services/nominal')
 
 const index = async (req, res) => {
     try {
-        const nominal = await getAll()
-        res.render('admin/nominal/viewNominal', { nominal })
+        const alertMessage = req.flash('alertMessage')
+        const alertStatus = req.flash('alertStatus')
+
+        const alert = { message: alertMessage, status: alertStatus }
+
+        const nominals = await getAll()
+        res.render('admin/nominal/viewNominal', {
+            nominals,
+            alert
+        })
     } catch (error) {
 
     }
@@ -20,14 +28,30 @@ const create = async (req, res) => {
 
 const actionCreat = async (req, res) => {
     try {
-        const nominal = await createNominal(req)
+        await createNominal(req)
+
+        res.redirect('/nominal')
 
     } catch (error) {
         console.log(error)
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const {id} = req.params
+
+        const nominals = await Nominal.findOne({_id:id})
+
+        res.render('admin/nominal/edit', {nominals})
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     index,
-    create
+    create,
+    actionCreat,
+    update
 }

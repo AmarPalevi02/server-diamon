@@ -20,6 +20,9 @@ const createNominal = async (req) => {
             price
         })
 
+        req.flash('alertMessage', `Berhasil Tambah Nominal ${coinName}`)
+        req.flash("alertStatus", "success")
+
         return result
     } catch (error) {
         console.log(error)

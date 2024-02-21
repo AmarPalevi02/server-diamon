@@ -1,20 +1,20 @@
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Tambah Catgory</h3>
+        <h3 class="card-title">Edit Nominal</h3>
     </div>
     <form action="/nominal/create" method="POST">
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">Masukan Coin Name</label>
-                <input type="text" name="coinName" class="form-control" id="coinName" placeholder="Enter Coin Name">
+                <input type="text" value="<%= nominals.coinName %>" name="coinName" class="form-control" id="coinName" placeholder="Enter Coin Name">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Masukan Coin Quantity</label>
-                <input type="number" name="coinQuantity" class="form-control" id="coinQuantity" placeholder="Enter Coin Quantity">
+                <input type="number" value="<%= nominals.coinQuantity %>" name="coinQuantity" class="form-control" id="coinQuantity" placeholder="Enter Coin Quantity">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Masukan Pricey</label>
-                <input type="number" name="price" class="form-control" id="price" placeholder="Enter Category">
+                <input type="number" value="<%= nominals.price %>" name="price" class="form-control" id="price" placeholder="Enter Category">
             </div>
         </div>
 
