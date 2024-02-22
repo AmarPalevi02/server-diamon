@@ -34,12 +34,14 @@ app.use('/adminlte', express.static(path.join(__dirname, '/node_modules/admin-lt
 const dashboardRoute = require('./app/dashboard/route')
 const categoriesRoute = require('./app/categories/router')
 const nominalRoute = require('./app/nominal/router')
+const voucherRoute = require('./app/voucher/router')
 
 // version
 // const v1 = '/v1'
 app.use(dashboardRoute)
 app.use(categoriesRoute)
 app.use(nominalRoute)
+app.use(voucherRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
