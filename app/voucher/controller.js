@@ -13,6 +13,15 @@ const index = async (req, res) => {
     }
 }
 
+const create = async (req, res) => {
+    try {
+        res.render('admin/voucher/create')
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
-    index
+    index,
+    create
 }
