@@ -2,20 +2,40 @@
     <div class="card-header">
         <h3 class="card-title">Tambah Catgory</h3>
     </div>
-    <form action="/nominal/create" method="POST">
+    <form action="/voucher/create" method="POST" enctype="multipart/form-data">
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">Masukan Name Game</label>
-                <input type="text" name="coinName" class="form-control" id="coinName" placeholder="Enter Coin Name">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter Coin Name">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Masukan Coin Quantity</label>
-                <input type="number" name="coinQuantity" class="form-control" id="coinQuantity"
-                    placeholder="Enter Coin Quantity">
+                <label>Categories</label>
+                <select class="form-control select2bs4" required name="category" id="category" style="width: 100%;">
+                    <% category.forEach((category)=> { %>
+                        <option <%=category._id%> ><%= category.name%>
+                        </option>
+                        <%})%>
+                </select>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Masukan Pricey</label>
-                <input type="number" name="price" class="form-control" id="price" placeholder="Enter Category">
+                <label>Nominlas</label>
+                <div class="select2-purple">
+                    <select class="form-control select2 " name="nominals" id="nominals" required multiple="multiple" style="width: 100%;">
+                        <!-- <option value="" disabled selected>Pilih Nominal</option> -->
+                        <% nominals.forEach((nominal)=> { %>
+                            <option value="<%= nominal._id%>">
+                                <%= nominal.coinName%> || <%= nominal.price%>
+                            </option>
+                            <%})%>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="image">Masukan Thumbnail</label>
+                <input type="file" name="image" class="form-control" id="image" placeholder="Masukan Thumbnail">
+                <br>
+
+                <img src="" id="perview">
             </div>
         </div>
 
