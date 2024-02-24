@@ -12,7 +12,7 @@
                 <label>Categories</label>
                 <select class="form-control select2bs4" required name="category" id="category" style="width: 100%;">
                     <% category.forEach((category)=> { %>
-                        <option <%=category._id%> ><%= category.name%>
+                        <option value="<%=category._id%>" ><%= category.name%>
                         </option>
                         <%})%>
                 </select>

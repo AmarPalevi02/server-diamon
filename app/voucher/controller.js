@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const config = require('../../configs/configs')
 
-const { getAll, createVoucher } = require('../services/voucher')
+const { getAll } = require('../services/voucher')
 
 const index = async (req, res) => {
     try {
@@ -68,12 +68,12 @@ const actionCreat = async (req, res) => {
                     })
 
                     console.log(voucher)
-
+                    
                     await voucher.save()
 
                     req.flash('alertMessage', `Berhasil Tambah Voucher ${name}`)
                     req.flash("alertStatus", "success")
-                    
+
                     res.redirect('/voucher')
                 } catch (error) {
                     req.flash('alertMessage', `${error.message}`)
