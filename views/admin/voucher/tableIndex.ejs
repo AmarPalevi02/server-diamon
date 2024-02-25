@@ -1,0 +1,51 @@
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Name Game</th>
+            <th>Categories</th>
+            <th>Nominals</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let i=0; i < vouchers.length; i++ ) { %>
+            <tr>
+                <td>
+                    <%= i + 1 %>
+                </td>
+                <td>
+                    <%= vouchers[i].name %>
+                </td>
+                <td>
+                    <%= vouchers[i].category.name ?? "-" %>
+                </td>
+                <td>
+                    <% vouchers[i].nominals.forEach(nominal => { %>
+                        <span class="badge badge-warning">nominal.coinName</span>
+                   <% }) %>
+                </td>
+                <td>
+                    <% if(vouchers[i].status === 'Active') { %>
+                        <span class="badge badge-success">Aktive</span>
+                    <% } else { %>
+                        <span class="badge badge-danger">Non-Active</span>
+                    <% } %>
+                </td>
+                <td>
+                    <form action="/voucher/delete/<%= vouchers[i]._id %>?_method=DELETE" method="POST">
+                        <a href="/voucher/update/<%= vouchers[i]._id %>" class="btn btn-warning">
+                            <i class="fas fa-pencil-alt"></i>
+                            Ubah
+                        </a>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                            Hapus
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+    </tbody>
+</table>

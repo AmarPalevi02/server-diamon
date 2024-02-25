@@ -15,6 +15,8 @@ const index = async (req, res) => {
         const alert = { message: alertMessage, status: alertStatus }
 
         const vouchers = await getAll()
+       
+        console.log(vouchers)
 
         res.render('admin/voucher/viewVoucher', {
             vouchers,

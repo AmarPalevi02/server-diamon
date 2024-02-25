@@ -7,5 +7,7 @@ const { index, create, actionCreat } = require('./controller')
 route.get('/voucher', index)
 route.get('/voucher/create', create)
 route.post('/voucher/create', multer({dest: os.tmpdir()}).single('image'), actionCreat)
+route.put('/voucher/edit/:id')
+route.delete('/voucher/delet/:id')
 
 module.exports = route
