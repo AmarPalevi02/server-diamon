@@ -1,0 +1,58 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Tambah Catgory</h3>
+    </div>
+    <form action="/voucher/update/<%= vouchers._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Masukan Name Game</label>
+                <input type="text" value="<%= vouchers.name %>" name="name" class="form-control" id="name" placeholder="Enter Coin Name">
+            </div>
+            <div class="form-group">
+                <label>Categories</label>
+                <select class="form-control select2bs4" required name="category" id="category" style="width: 100%;">
+                    <% category.forEach((category)=> { %>
+                        <!-- <option selected="selected">Pilih Category</option> -->
+                        <option value="<%=category._id%>" 
+                            <% if(category._id.toString() === vouchers?.category?._id.toString()) { %>
+                                selected
+                            <%}%>
+                            >
+                            <%= category.name%>
+                        </option>
+                        <%})%>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Nominlas</label>
+                <div class="select2-purple">
+                    <select class="form-control select2 " name="nominals" id="nominals" required multiple="multiple" style="width: 100%;">
+                        <!-- <option value="" disabled selected>Pilih Nominal</option> -->
+                        <% nominals.forEach((nominal)=> { %>
+                            <option value="<%= nominal._id%>"
+                                <% vouchers.nominals.forEach(nominalName => { %>
+                                    <%if(nominal._id.toString() === nominalName._id.toString()) { %>
+                                        selected
+                                  <% } %>
+                               <% }) %>
+                                >
+                                <%= nominal.coinName%> || <%= nominal.price%>
+                            </option>
+                            <%})%>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="image">Masukan Thumbnail</label>
+                <input type="file" name="image" class="form-control" id="image" placeholder="Masukan Thumbnail">
+                <br>
+
+                <img src="http://localhost:8888/uploads/<%= vouchers.thumbnail %>" id="perview" >
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>

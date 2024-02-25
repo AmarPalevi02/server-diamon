@@ -34,12 +34,22 @@
                     <% } %>
                 </td>
                 <td>
-                    <form action="/voucher/delete/<%= vouchers[i]._id %>?_method=DELETE" method="POST">
-                        <a href="/voucher/update/<%= vouchers[i]._id %>" class="btn btn-warning">
-                            <i class="fas fa-pencil-alt"></i>
-                            Ubah
-                        </a>
-                        <button class="btn btn-danger">
+                    <form action="" style="display: inline-block;">
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-folder"></i>
+                            <% if(vouchers[i].status === 'Active') { %>
+                                Non-Activ
+                            <% } else { %>
+                               Active
+                            <% } %>
+                        </button>
+                    </form>
+                    <a href="/voucher/update/<%= vouchers[i]._id %>" class="btn btn-warning btn-sm">
+                        <i class="fas fa-pencil-alt"></i>
+                        Ubah
+                    </a>
+                    <form style="display: inline-block;" action="/voucher/delete/<%= vouchers[i]._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm">
                             <i class="fas fa-trash"></i>
                             Hapus
                         </button>

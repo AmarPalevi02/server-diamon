@@ -15,7 +15,7 @@ const index = async (req, res) => {
         const alert = { message: alertMessage, status: alertStatus }
 
         const vouchers = await getAll()
-       
+
         console.log(vouchers)
 
         res.render('admin/voucher/viewVoucher', {
@@ -23,7 +23,8 @@ const index = async (req, res) => {
             alert
         })
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
     }
 }
 
@@ -37,7 +38,8 @@ const create = async (req, res) => {
             nominals
         })
     } catch (error) {
-
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
     }
 }
 
@@ -69,8 +71,6 @@ const actionCreat = async (req, res) => {
                         thumbnail: fileName
                     })
 
-                    console.log(voucher)
-                    
                     await voucher.save()
 
                     req.flash('alertMessage', `Berhasil Tambah Voucher ${name}`)
@@ -105,8 +105,124 @@ const actionCreat = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const category = await Categories.find()
+        const nominals = await Nominal.find()
+        const vouchers = await Voucher.findOne({ _id: id })
+            .populate('category')
+            .populate('nominals')
+
+        res.render('admin/voucher/edit', {
+            vouchers,
+            nominals,
+            category
+        })
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
+    }
+}
+
+const actionUpdate = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            name,
+            category,
+            nominals
+        } = req.body
+
+        if (req.file) {
+            let temp_path = req.file.path
+            let originalExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1]
+            let fileName = req.file.filename + '.' + originalExt
+            let target_path = path.resolve(config.rootPath, `public/uploads/${fileName}`)
+
+            const src = fs.createReadStream(temp_path)
+            const des = fs.createWriteStream(target_path)
+
+            src.pipe(des)
+
+            src.on('end', async () => {
+                try {
+                    const vouchers = await Voucher.findOne({ _id: id })
+
+                    let currentImage = `${config.rootPath}/public/uploads/${vouchers.thumbnail}`
+
+                    if (fs.existsSync(currentImage)) {
+                        fs.unlinkSync(currentImage)
+                    }
+
+                    await vouchers.findOneAndUpdate(
+                        { _id: id },
+                        {
+                            name,
+                            category,
+                            nominals,
+                            thumbnail: fileName
+                        }
+                    )
+                    console.log(vouchers)
+
+                    req.flash('alertMessage', `Berhasil Update Voucher ${name}`)
+                    req.flash("alertStatus", "success")
+
+                    res.redirect('/voucher')
+                } catch (error) {
+                    req.flash('alertMessage', `${error.message}`)
+                    req.flash('alertStatus', 'danger')
+                }
+            })
+        } else {
+            await Voucher.findOneAndUpdate(
+                { _id: id },
+                {
+                    name,
+                    category,
+                    nominals
+                }
+            )
+
+            req.flash('alertMessage', `Berhasil Update Voucher ${name} `)
+            req.flash("alertStatus", "success")
+
+            res.redirect('/voucher')
+        }
+
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
+    }
+}
+
+const actionDelete = async (req, res) => {
+    try {
+        const { id } = req.params
+        const getOne = await Voucher.findOne({ _id: id })
+
+        if (getOne) {
+            const voucherName = getOne.name
+
+            req.flash('alertMessage', `Berhasil Delete ${voucherName}`)
+            req.flash('alertStatus', 'danger')
+
+            await Voucher.findOneAndDelete({ _id: id })
+        }
+        res.redirect('/voucher')
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
+    }
+}
+
 module.exports = {
     index,
     create,
-    actionCreat
+    actionCreat,
+    update,
+    actionUpdate,
+    actionDelete
 }
