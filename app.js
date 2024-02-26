@@ -35,6 +35,7 @@ const dashboardRoute = require('./app/dashboard/route')
 const categoriesRoute = require('./app/categories/router')
 const nominalRoute = require('./app/nominal/router')
 const voucherRoute = require('./app/voucher/router')
+const bankRoute = require('./app/bank/router')
 
 // version
 // const v1 = '/v1'
@@ -42,6 +43,7 @@ app.use(dashboardRoute)
 app.use(categoriesRoute)
 app.use(nominalRoute)
 app.use(voucherRoute)
+app.use(bankRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
