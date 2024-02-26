@@ -40,6 +40,7 @@ const create = async (req, res) => {
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
     }
 }
 
@@ -80,6 +81,7 @@ const actionCreat = async (req, res) => {
                 } catch (error) {
                     req.flash('alertMessage', `${error.message}`)
                     req.flash('alertStatus', 'danger')
+                    res.redirect('/voucher')
                 }
             })
         } else {
@@ -102,6 +104,7 @@ const actionCreat = async (req, res) => {
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
     }
 }
 
@@ -123,6 +126,7 @@ const update = async (req, res) => {
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
     }
 }
 
@@ -165,7 +169,6 @@ const actionUpdate = async (req, res) => {
                             thumbnail: fileName
                         }
                     )
-                    console.log(vouchers)
 
                     req.flash('alertMessage', `Berhasil Update Voucher ${name}`)
                     req.flash("alertStatus", "success")
@@ -174,6 +177,7 @@ const actionUpdate = async (req, res) => {
                 } catch (error) {
                     req.flash('alertMessage', `${error.message}`)
                     req.flash('alertStatus', 'danger')
+                    res.redirect('/voucher')
                 }
             })
         } else {
@@ -195,6 +199,7 @@ const actionUpdate = async (req, res) => {
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
     }
 }
 
@@ -215,6 +220,36 @@ const actionDelete = async (req, res) => {
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
+    }
+}
+
+const actionUpdateStatus = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        let voucers = await Voucher.findOne({ _id: id })
+
+        let status = voucers.status === 'Active' ? 'Non-Active' : "Active"
+
+        if (voucers) {
+            const getOneName = voucers.name
+
+            voucers = await Voucher.findOneAndUpdate(
+                { _id: id },
+                { status }
+            )
+
+            req.flash('alertMessage', `Berhasil Update Status ${getOneName}`)
+            req.flash('alertStatus', 'success')
+        }
+
+        res.redirect('/voucher')
+
+    } catch (error) {
+        req.flash('alertMessage', `${error.message}`)
+        req.flash('alertStatus', 'danger')
+        res.redirect('/voucher')
     }
 }
 
@@ -224,5 +259,6 @@ module.exports = {
     actionCreat,
     update,
     actionUpdate,
-    actionDelete
+    actionDelete,
+    actionUpdateStatus
 }
