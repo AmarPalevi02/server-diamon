@@ -65,7 +65,7 @@ const actionUpdate = async (req, res) => {
          noRekening } = req.body
 
       const bank = await Bank.findOneAndUpdate(
-         {_id: id},
+         { _id: id },
          {
             name,
             nameBank,
@@ -83,10 +83,36 @@ const actionUpdate = async (req, res) => {
       res.redirect('/bank')
    }
 }
+
+const actionDelete = async (req, res) => {
+   try {
+      const { id } = req.params
+
+      const getOne = await Bank.findOne({ _id: id })
+
+      if (getOne) {
+         const getName = getOne.name
+
+         req.flash('alertMessage', `Berhasil Delete Bank ${getName}`)
+         req.flash("alertStatus", "danger")
+
+         await Bank.findOneAndDelete({ _id: id })
+      }
+
+      res.redirect("/bank")
+
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/bank')
+   }
+}
+
 module.exports = {
    index,
    create,
    actionCreate,
    update,
-   actionUpdate
+   actionUpdate,
+   actionDelete
 }
