@@ -1,5 +1,5 @@
 const Bank = require('./model')
-const { getAll } = require('../services/bank')
+const { getAll, createBank } = require('../services/bank')
 
 const index = async (req, res) => {
    try {
@@ -15,10 +15,36 @@ const index = async (req, res) => {
          alert
       })
    } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/bank')
+   }
+}
 
+const create = async (req, res) => {
+   try {
+      res.render('admin/bank/create')
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/bank')
+   }
+}
+
+const actionCreate = async (req, res) => {
+   try {
+      const bank = await createBank(req)
+
+      res.redirect('/bank', { bank })
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/bank')
    }
 }
 
 module.exports = {
-   index
+   index,
+   create,
+   actionCreate
 }
