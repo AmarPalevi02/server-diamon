@@ -27,7 +27,7 @@ const createBank = async (req, res) => {
       })
 
       req.flash('alertMessage', `Berhasil Tambah Bank ${name}`)
-      req.flash("alertStatus", "primary")
+      req.flash("alertStatus", "success")
 
       return result
    } catch (error) {

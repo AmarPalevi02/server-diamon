@@ -1,0 +1,25 @@
+<div class="card card-primary">
+   <div class="card-header">
+      <h3 class="card-title">Tambah Bank</h3>
+   </div>
+   <form action="/bank/update/<%=getOne._id%>?_method=PUT" method="POST">
+      <div class="card-body">
+         <div class="form-group">
+            <label for="exampleInputEmail1">Masukan Nama Pemilik</label>
+            <input type="text" name="name" value="<%= getOne.name%>" class="form-control" id="name" placeholder="Enter Nama pemilik">
+         </div>
+         <div class="form-group">
+            <label for="exampleInputEmail1">Masukan Nama Bank</label>
+            <input type="text" name="nameBank" value="<%= getOne.nameBank%>" class="form-control" id="nameBank" placeholder="Enter Nama Bank">
+         </div>
+         <div class="form-group">
+            <label for="exampleInputEmail1">Masukan NoRekening</label>
+            <input type="text" name="noRekening" value="<%=getOne.noRekening%>" class="form-control" id="noRekening" placeholder="Enter NoRekening">
+         </div>
+      </div>
+
+      <div class="card-footer">
+         <button type="submit" class="btn btn-success">Save</button>
+      </div>
+   </form>
+</div>
