@@ -88,11 +88,31 @@ const actionUpdate = async (req, res) => {
 
          await Payment.findOneAndUpdate(
             { _id: id },
-            {
-               type,
-               banks
-            }
+            { type, banks }
          )
+      }
+
+      res.redirect('/payment')
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/payment')
+   }
+}
+
+const actionDelete = async (req, res) => {
+   try {
+      const { id } = req.params
+
+      const getOne = await Payment.findOne({ _id: id })
+
+      if (getOne) {
+         const getName = getOne.type
+
+         req.flash('alertMessage', `Berhasil Delete Payment Type ${getName}`)
+         req.flash('alertStatus', 'danger')
+
+         await Payment.findOneAndDelete({ _id: id })
       }
 
       res.redirect('/payment')
@@ -108,5 +128,6 @@ module.exports = {
    create,
    actionCreate,
    update,
-   actionUpdate
+   actionUpdate,
+   actionDelete
 }
