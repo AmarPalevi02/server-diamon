@@ -123,11 +123,40 @@ const actionDelete = async (req, res) => {
    }
 }
 
+const updateStatus = async (req, res) => {
+   try {
+      const { id } = req.params
+
+      let getOne = await Payment.findOne({ _id: id })
+
+      let status = getOne.status === "Active" ? "Non-Active" : "Active"
+
+      if (getOne) {
+         const getName = getOne.type
+
+         getOne = await Payment.findOneAndUpdate(
+            { _id: id },
+            { status }
+         )
+
+         req.flash('alertMessage', `Berhasil Update Status Payment ${getName}`)
+         req.flash('alertStatus', 'success')
+      }
+
+      res.redirect('/payment')
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/payment')
+   }
+}
+
 module.exports = {
    index,
    create,
    actionCreate,
    update,
    actionUpdate,
-   actionDelete
+   actionDelete,
+   updateStatus
 }

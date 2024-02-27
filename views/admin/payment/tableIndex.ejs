@@ -32,7 +32,7 @@
              <% } %>
             </td>
             <td>
-               <form style="display: inline-block;">
+               <form action="/payment/status/<%= getAllPayment[i]._id%>?_method=PUT" method="POST" style="display: inline-block;">
                   <button class="btn btn-primary btn-sm">
                      <% if(getAllPayment[i].status === 'Active') { %>
                         Non-Active
