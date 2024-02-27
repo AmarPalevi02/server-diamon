@@ -57,10 +57,56 @@ const actionCreate = async (req, res) => {
    }
 }
 
+const update = async (req, res) => {
+   try {
+      const { id } = req.params
 
+      const banks = await Bank.find()
+      const getOnePayment = await Payment.findOne({ _id: id })
+         .populate('banks')
+
+      res.render('admin/payment/edit', { getOnePayment, banks })
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/payment')
+   }
+}
+
+const actionUpdate = async (req, res) => {
+   try {
+      const { id } = req.params
+      const { type, banks } = req.body
+
+      const getOne = await Payment.findOne({ _id: id })
+
+      if (getOne) {
+         const getName = getOne.type
+
+         req.flash('alertMessage', `Berhasil Update Payment Type ${getName}`)
+         req.flash('alertStatus', 'primary')
+
+         await Payment.findOneAndUpdate(
+            { _id: id },
+            {
+               type,
+               banks
+            }
+         )
+      }
+
+      res.redirect('/payment')
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+      res.redirect('/payment')
+   }
+}
 
 module.exports = {
    index,
    create,
-   actionCreate
+   actionCreate,
+   update,
+   actionUpdate
 }
