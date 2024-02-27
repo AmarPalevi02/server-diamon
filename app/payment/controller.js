@@ -9,11 +9,13 @@ const index = async (req, res) => {
 
       const alert = { message: alertMessage, status: alertStatus }
 
-      const getAllPayment = await getAll(req)
+      const getAllPayment = await getAll()
+
+      console.log(getAllPayment)
 
       res.render('admin/payment/viewPayment', {
+         getAllPayment,
          alert,
-         getAllPayment
       })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
@@ -54,6 +56,8 @@ const actionCreate = async (req, res) => {
       res.redirect('/payment')
    }
 }
+
+
 
 module.exports = {
    index,

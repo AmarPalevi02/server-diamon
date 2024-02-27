@@ -11,10 +11,10 @@ const paymentSchema = Schema({
       enum: ['Active', 'Non-Active'],
       default: 'Active'
    },
-   banks: {
+   banks: [{
       type: mongoose.Types.ObjectId,
       ref: 'Bank'
-   }
+   }]
 })
 
 module.exports = model('Payment', paymentSchema)

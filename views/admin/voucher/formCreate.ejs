@@ -1,6 +1,6 @@
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Tambah Catgory</h3>
+        <h3 class="card-title">Tambah Voucher</h3>
     </div>
     <form action="/voucher/create" method="POST" enctype="multipart/form-data">
         <div class="card-body">
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label>Nominlas</label>
                 <div class="select2-purple">
-                    <select class="form-control select2 " name="nominals" id="nominals" required multiple="multiple" style="width: 100%;">
+                    <select class="form-control select2 " data-placeholder="pilih nominal" name="nominals" id="nominals" required multiple="multiple" style="width: 100%;">
                         <!-- <option value="" disabled selected>Pilih Nominal</option> -->
                         <% nominals.forEach((nominal)=> { %>
                             <option value="<%= nominal._id%>">

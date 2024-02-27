@@ -1,0 +1,58 @@
+<table id="example2" class="table table-bordered table-hover">
+   <thead>
+      <tr>
+         <th>No</th>
+         <th>Type</th>
+         <th>Bank</th>
+         <th>Status</th>
+         <th>Aksi</th>
+      </tr>
+   </thead>
+   <tbody>
+      <% for(let i=0; i < getAllPayment.length; i++ ) { %>
+         <tr>
+            <td>
+               <%= i + 1 %>
+            </td>
+            <td>
+               <%= getAllPayment[i].type %>
+            </td>
+            <td>
+                  <% getAllPayment[i].banks.forEach(bank => { %>
+                     <span class="badge badge-warning">
+                        <%= bank.nameBank %>
+                     </span>
+                  <% }) %>
+            </td>
+            <td>
+               <% if(getAllPayment[i].status === 'Active') { %>
+                  <span class="badge badge-success">Active</span>
+              <% }else { %>
+               <span class="badge badge-danger">Non-Active</span>
+             <% } %>
+            </td>
+            <td>
+               <form style="display: inline-block;">
+                  <button class="btn btn-primary btn-sm">
+                     <% if(getAllPayment[i].status === 'Active') { %>
+                        Non-Active
+                    <% } else { %>
+                        Active
+                    <% } %>
+                  </button>
+               </form>
+               <a href="/payment/update/<%= getAllPayment[i]._id %>" class="btn btn-warning btn-sm">
+                  <i class="fas fa-pencil-alt"></i>
+                  Ubah
+               </a>
+               <form action="/payment/delete/<%= getAllPayment[i]._id %>?_method=DELETE" method="POST" style="display: inline-block;">
+                  <button class="btn btn-danger btn-sm">
+                     <i class="fas fa-trash"></i>
+                     Hapus
+                  </button>
+               </form>
+            </td>
+         </tr>
+         <% } %>
+   </tbody>
+</table>
