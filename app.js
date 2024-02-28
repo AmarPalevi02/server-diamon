@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminlte', express.static(path.join(__dirname, '/node_modules/admin-lte')))
 
 // route
+const userRoute = require('./app/user/router')
 const dashboardRoute = require('./app/dashboard/route')
 const categoriesRoute = require('./app/categories/router')
 const nominalRoute = require('./app/nominal/router')
@@ -40,6 +41,7 @@ const paymentRoute = require('./app/payment/router')
 
 // version
 // const v1 = '/v1'
+app.use(userRoute)
 app.use(dashboardRoute)
 app.use(categoriesRoute)
 app.use(nominalRoute)
