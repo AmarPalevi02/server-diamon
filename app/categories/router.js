@@ -2,6 +2,9 @@ const express = require('express')
 const route = express()
 const { index, create, actionCreate, update, actionUpdate, actionDelete } = require('./controller')
 
+const { isLoginAdmin } = require('../middleware/auth')
+
+route.use(isLoginAdmin)
 route.get('/category', index)
 route.get('/category/create', create)
 route.post('/category/create', actionCreate)

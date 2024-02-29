@@ -6,7 +6,11 @@ const index = async (req, res) => {
       const alertMessage = req.flash('alertMessage')
       const alertStatus = req.flash('alertStatus')
       const alert = { message: alertMessage, status: alertStatus }
-      res.render('admin/user/viewSignIn', { alert })
+      if (req.session.User === null || req.session.User === undefined) {
+         res.render('admin/user/viewSignIn', { alert })
+      } else {
+         res.redirect('/dashboard')
+      }
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
       req.flash('alertStatus', 'danger')
@@ -23,7 +27,13 @@ const actionSignIn = async (req, res) => {
       if (check) {
          if (check.status === 'Active') {
             const checkPassword = await bcrypt.compare(password, check.password)
-            if(checkPassword){
+            if (checkPassword) {
+               req.session.User = {
+                  id: check._id,
+                  email: check.email,
+                  status: check.status,
+                  name: check.name
+               }
                res.redirect('/dashboard')
             } else {
                req.flash('alertMessage', 'Password tidak di temukan!')
