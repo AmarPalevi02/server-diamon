@@ -15,6 +15,6 @@ const paymentSchema = Schema({
       type: mongoose.Types.ObjectId,
       ref: 'Bank'
    }]
-})
+}, { timestamps: true })
 
 module.exports = model('Payment', paymentSchema)

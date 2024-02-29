@@ -14,6 +14,6 @@ const bankSchema = Schema({
       type: String,
       require: [true, 'Nomor Rekening harus di isi!']
    }
-})
+}, { timestamps: true })
 
 module.exports = model('Bank', bankSchema)
