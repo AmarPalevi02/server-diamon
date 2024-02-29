@@ -1,7 +1,8 @@
 const express = require('express')
 const route = express()
-const { index } = require('./controller')
+const { index, actionSignIn } = require('./controller')
 
 route.get('/', index)
+route.post('/', actionSignIn)
 
 module.exports = route
