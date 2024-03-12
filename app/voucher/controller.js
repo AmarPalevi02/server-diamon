@@ -18,7 +18,9 @@ const index = async (req, res) => {
 
         res.render('admin/voucher/viewVoucher', {
             vouchers,
-            alert
+            alert,
+            name: req.session.User.name,
+            title: 'Halaman Voucher'
         })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
@@ -33,7 +35,9 @@ const create = async (req, res) => {
 
         res.render('admin/voucher/create', {
             category,
-            nominals
+            nominals,
+            name: req.session.User.name,
+            title: 'Halaman Voucher'
         })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
@@ -119,7 +123,9 @@ const update = async (req, res) => {
         res.render('admin/voucher/edit', {
             vouchers,
             nominals,
-            category
+            category,
+            name: req.session.User.name,
+            title: 'Halaman Voucher'
         })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)

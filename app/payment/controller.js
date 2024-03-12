@@ -16,6 +16,8 @@ const index = async (req, res) => {
       res.render('admin/payment/viewPayment', {
          getAllPayment,
          alert,
+         name: req.session.User.name,
+         title: 'Halaman Payment'
       })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
@@ -29,7 +31,9 @@ const create = async (req, res) => {
       const banks = await Bank.find()
 
       res.render('admin/payment/create', {
-         banks
+         banks,
+         name: req.session.User.name,
+         title: 'Halaman Payment'
       })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
@@ -65,7 +69,12 @@ const update = async (req, res) => {
       const getOnePayment = await Payment.findOne({ _id: id })
          .populate('banks')
 
-      res.render('admin/payment/edit', { getOnePayment, banks })
+      res.render('admin/payment/edit', {
+         getOnePayment,
+         banks,
+         name: req.session.User.name,
+         title: 'Halaman Payment'
+      })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
       req.flash('alertStatus', 'danger')

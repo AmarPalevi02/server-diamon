@@ -12,7 +12,9 @@ const index = async (req, res) => {
 
       res.render('admin/bank/viewBank', {
          bank,
-         alert
+         alert,
+         name: req.session.User.name,
+         title: 'Halaman Bank'
       })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
@@ -23,7 +25,10 @@ const index = async (req, res) => {
 
 const create = async (req, res) => {
    try {
-      res.render('admin/bank/create')
+      res.render('admin/bank/create', {
+         name: req.session.User.name,
+         title: 'Halaman Bank'
+      })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
       req.flash('alertStatus', 'danger')
@@ -48,7 +53,11 @@ const update = async (req, res) => {
       const { id } = req.params
       const getOne = await Bank.findOne({ _id: id })
 
-      res.render('admin/bank/edit', { getOne })
+      res.render('admin/bank/edit', {
+         getOne,
+         name: req.session.User.name,
+         title: 'Halaman Bank'
+      })
    } catch (error) {
       req.flash('alertMessage', `${error.message}`)
       req.flash('alertStatus', 'danger')

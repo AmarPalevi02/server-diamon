@@ -10,7 +10,9 @@ const index = async (req, res) => {
         const categories = await categoryAll()
         res.render('admin/category/viewCategory', {
             categories,
-            alert
+            alert,
+            name: req.session.User.name,
+            title: 'Halaman Categories'
         });
 
     } catch (error) {
@@ -22,7 +24,10 @@ const index = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        res.render('admin/category/create');
+        res.render('admin/category/create', {
+            name: req.session.User.name,
+            title: 'Halaman Categories'
+        });
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', danger)
@@ -47,7 +52,11 @@ const update = async (req, res) => {
 
         const category = await Category.findOne({ _id: id })
 
-        res.render('admin/category/edit', { category })
+        res.render('admin/category/edit', {
+            category,
+            name: req.session.User.name,
+            title: 'Halaman Categories'
+        })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', danger)

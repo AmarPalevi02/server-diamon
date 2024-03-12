@@ -12,7 +12,9 @@ const index = async (req, res) => {
 
         res.render('admin/nominal/viewNominal', {
             nominals,
-            alert
+            alert,
+            name: req.session.User.name,
+            title: 'Halaman Nominal'
         })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
@@ -23,7 +25,10 @@ const index = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        res.render('admin/nominal/create')
+        res.render('admin/nominal/create', {
+            name: req.session.User.name,
+            title: 'Halaman Nominal'
+        })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', danger)
@@ -50,7 +55,11 @@ const update = async (req, res) => {
 
         const nominals = await Nominal.findOne({ _id: id })
 
-        res.render('admin/nominal/edit', { nominals })
+        res.render('admin/nominal/edit', {
+            nominals,
+            name: req.session.User.name,
+            title: 'Halaman Nominal'
+        })
     } catch (error) {
         req.flash('alertMessage', `${error.message}`)
         req.flash('alertStatus', danger)

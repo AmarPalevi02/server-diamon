@@ -58,7 +58,13 @@ const actionSignIn = async (req, res) => {
    }
 }
 
+const actionLogout = async (req, res) => {
+   req.session.destroy()
+   res.redirect('/')
+}
+
 module.exports = {
    index,
-   actionSignIn
-}
+   actionSignIn,
+   actionLogout
+} 
