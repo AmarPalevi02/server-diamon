@@ -38,6 +38,7 @@ const nominalRoute = require('./app/nominal/router')
 const voucherRoute = require('./app/voucher/router')
 const bankRoute = require('./app/bank/router')
 const paymentRoute = require('./app/payment/router')
+const transationsRoute = require('./app/transaction/router')
 
 // version
 // const v1 = '/v1'
@@ -48,6 +49,7 @@ app.use(nominalRoute)
 app.use(voucherRoute)
 app.use(bankRoute)
 app.use(paymentRoute)
+app.use(transationsRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
