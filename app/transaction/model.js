@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { model, Schema } = mongoose
 
 const transactionSchema = Schema({
-   historyVoucherTopUp: {
+   historyVoucherTopup: {
       gameName: { type: String, require: [true, 'nama game wajib di isi!'] },
       category: { type: String, require: [true, 'Category harus di isi!'] },
       thumbnail: { type: String },

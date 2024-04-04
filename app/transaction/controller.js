@@ -9,6 +9,7 @@ const index = async (req, res) => {
       const alert = { message: alertMessage, status: alertStatus }
 
       const transactions = await getAll()
+      console.log(transactions)
 
       res.render('admin/transaction/viewTransaction', {
          transactions,
