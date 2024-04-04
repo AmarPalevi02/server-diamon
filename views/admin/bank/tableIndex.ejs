@@ -37,5 +37,11 @@
                </td>
            </tr>
            <% } %>
+           
+           <% if(bank.length === 0 ) { %>
+            <tr class="empty-data-message">
+              <td colspan="5" style="text-align: center;">Data kosong</td>
+            </tr>
+            <% } %>
    </tbody>
 </table>
