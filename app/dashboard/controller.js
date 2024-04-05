@@ -1,12 +1,23 @@
 const User = require('../user/model')
+const Transaction = require('../transaction/model')
+const Voucher = require('../voucher/model')
+const Player = require('../player/model')
+const Categories = require('../categories/model')
 
-const index = (req, res) => {
+const index = async (req, res) => {
     try {
-        console.log('seasson')
-        console.log(req.session.User)
-        res.render('index', {
+        const transactions = await Transaction.countDocuments()
+        const voucher = await Voucher.countDocuments()
+        const player = await Player.countDocuments()
+        const categories = await Categories.countDocuments()
+
+        res.render('admin/dashboard/viewDashboard.ejs', {
             name: req.session.User.name,
-            title: 'Halaman Dashboard'
+            title: 'Halaman Dashboard',
+            transactions,
+            voucher,
+            player,
+            categories
         });
     } catch (error) {
         console.log(error)

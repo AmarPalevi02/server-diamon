@@ -9,7 +9,6 @@ const index = async (req, res) => {
       const alert = { message: alertMessage, status: alertStatus }
 
       const transactions = await getAll()
-      console.log(transactions)
 
       res.render('admin/transaction/viewTransaction', {
          transactions,
@@ -23,6 +22,23 @@ const index = async (req, res) => {
    }
 }
 
+const actionStatus = async (req, res) => {
+   try {
+      const { id } = req.params
+      const { status } = req.query
+
+      await Transaction.findByIdAndUpdate({ _id: id }, {status})
+      
+      req.flash('alertMessage', `Berhasil Update status ${status}`)
+      req.flash('alertStatus', 'success')
+      res.redirect('/transactions')
+   } catch (error) {
+      req.flash('alertMessage', `${error.message}`)
+      req.flash('alertStatus', 'danger')
+   }
+}
+
 module.exports = {
-   index
+   index,
+   actionStatus
 }

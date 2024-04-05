@@ -13,7 +13,9 @@ const userSchema = Schema({
    },
    name: {
       type: String,
-      require: [true, 'Nama harus di isi!']
+      require: [true, 'Nama harus di isi!'],
+      maxLength: [255, "Panjang nama haru 3 - 255 karakter"],
+      minLength: [3, "Panjang nama haru 3 - 255 karakter"]
    },
    phoneNumber: {
       type: Number,
