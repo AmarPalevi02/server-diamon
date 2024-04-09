@@ -19,8 +19,8 @@
             <td>
                <ul class="list-inline">
                   <li class="list-inline-item">
-                     <img width="48px" height="48px" src="http://localhost:8888/uploads/<%= transactions[i].historyVoucherTopup.thumbnail %>"
-                        alt="">
+                     <img width="48px" height="48px"
+                        src="http://localhost:8888/uploads/<%= transactions[i].historyVoucherTopup.thumbnail %>" alt="">
                   </li>
                </ul>
                <%= transactions[i]?.historyVoucherTopup?.gameName %>
@@ -35,34 +35,40 @@
                <%= transactions[i]?.name %>
             </td>
             <td>
-               <% if(transactions[i].status === 'pending') { %>
+               <% if(transactions[i].status==='pending' ) { %>
                   <span class="badge bg-warning ">
                      <%= transactions[i].status %>
                   </span>
-               <%} else if(transactions[i].status === 'success') { %>
-                  <span class="badge bg-success ">
-                     <%= transactions[i].status %>
-                  </span>
-              <% } else{ %>
-               <span class="badge bg-danger ">
-                  <%= transactions[i].status %>
-               </span>
-              <%}%>
+                  <%} else if(transactions[i].status==='success' ) { %>
+                     <span class="badge bg-success ">
+                        <%= transactions[i].status %>
+                     </span>
+                     <% } else{ %>
+                        <span class="badge bg-danger ">
+                           <%= transactions[i].status %>
+                        </span>
+                        <%}%>
             </td>
 
             <td>
-               <form style="display: inline-block;" action="/transactions/status/<%= transactions[i]._id%>?status=failed&_method=PUT" method="POST">
-                  <button class="btn btn-warning btn-sm">
-                      <i class="fas fa-times-circle"></i>
-                      Tolak
-                  </button>
-              </form> 
-               <form style="display: inline-block;" action="/transactions/status/<%= transactions[i]._id%>?status=success&_method=PUT" method="POST">
-                  <button class="btn btn-info btn-sm">
-                      <i class="fas fa-check"></i>
-                      Trima
-                  </button>
-              </form> 
+               <% if(transactions[i].status==='success' ) { %>
+                  
+                  <% } else { %>
+                     <form style="display: inline-block;"
+                     action="/transactions/status/<%= transactions[i]._id%>?status=failed&_method=PUT" method="POST">
+                     <button class="btn btn-warning btn-sm">
+                        <i class="fas fa-times-circle"></i>
+                        Tolak
+                     </button>
+                  </form>
+                  <form style="display: inline-block;"
+                     action="/transactions/status/<%= transactions[i]._id%>?status=success&_method=PUT" method="POST">
+                     <button class="btn btn-info btn-sm">
+                        <i class="fas fa-check"></i>
+                        Trima
+                     </button>
+                  </form>
+                 <% } %>
             </td>
          </tr>
          <% } %>
