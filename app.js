@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/adminlte', express.static(path.join(__dirname, '/node_modules/admin-lte')))
+
 const v1 = '/v1'
 // route
 const userRoute = require('./app/user/router')
@@ -40,8 +41,11 @@ const bankRoute = require('./app/bank/router')
 const paymentRoute = require('./app/payment/router')
 const transationsRoute = require('./app/transaction/router')
 const playerRoute = require('./app/player/router')
+const authRoute = require('./app/auth/router')
 
 // version
+app.use(`${v1}/cms/api`, authRoute)
+app.use(`${v1}/cms/api`, playerRoute)
 
 app.use(userRoute)
 app.use(dashboardRoute)
@@ -51,7 +55,6 @@ app.use(voucherRoute)
 app.use(bankRoute)
 app.use(paymentRoute)
 app.use(transationsRoute)
-app.use(`${v1}/cms/api`, playerRoute)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
