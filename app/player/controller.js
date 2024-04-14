@@ -1,4 +1,5 @@
 const Player = require('./model')
+const Categories = require('../categories/model')
 const { getAll, getDetail } = require('../services/player')
 
 const index = async (req, res, next) => {
@@ -21,9 +22,9 @@ const detail = async (req, res) => {
    try {
       const detailPage = await getDetail(req)
 
-      if(!detailPage) {
-         return res.status(404).json({message: 'voucher tidak di temukan!'})
-       }
+      if (!detailPage) {
+         return res.status(404).json({ message: 'voucher tidak di temukan!' })
+      }
 
       res.status(200).json({
          message: 'success',
@@ -34,8 +35,22 @@ const detail = async (req, res) => {
    }
 }
 
+const category = async (req, res) => {
+   try {
+      const categori = await Categories.find()
+
+      res.status(200).json({
+         status: 'OK',
+         data: categori
+      })
+   } catch (error) {
+      res.status(500).json(error.message)
+   }
+}
+
 module.exports = {
    index,
-   detail
+   detail,
+   category
 }
 
