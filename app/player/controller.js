@@ -4,6 +4,7 @@ const Voucher = require('../voucher/model')
 const Nominal = require('../nominal/model')
 const Payment = require('../payment/model')
 const Bank = require('../bank/model')
+const Transaction = require('../transaction/model')
 
 const { getAll, getDetail } = require('../services/player')
 
@@ -82,10 +83,10 @@ const checout = async (req, res) => {
             price: res_nominal._doc.price
          },
          historyPayment: {
-            name: res_payment._doc.name,
+            name: res_bank._doc.name,
             type: res_payment._doc.type,
-            bankName: res_payment._doc.bankName,
-            noRekening: res_payment._doc.noRekening
+            bankName: res_bank._doc.nameBank,
+            noRekening: res_bank._doc.noRekening
          },
 
          name: name,
@@ -95,7 +96,7 @@ const checout = async (req, res) => {
          player: req.player._id,
 
          historyUser: {
-            name: res_voucher._doc.user?._id,
+            name: res_voucher._doc.user?.name,
             phoneNumber: res_voucher._doc.user?.phoneNumber
          },
 
@@ -103,7 +104,11 @@ const checout = async (req, res) => {
          user: res_voucher._doc.user?._id,
       }
 
-      res.status(201).json({data: payload})
+      const transaction = new Transaction(payload)
+
+      await transaction.save()
+
+      res.status(201).json({data: transaction})
    } catch (error) {
 
    }

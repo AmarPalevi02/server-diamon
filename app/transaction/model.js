@@ -53,8 +53,8 @@ const transactionSchema = Schema({
 
    historyUser: {
       name: {type: String, require: [true, 'Nama Player harus di isi!']},
-      phonrNumber: {
-         type: String,
+      phoneNumber: {
+         type: Number,
          require: [true, "Phone Number harus di isi!"],
          maxLength: [13, "Panjang nama haru 11 - 13 karakter"],
          minLength: [11, "Panjang nama haru 11 - 13 karakter"]

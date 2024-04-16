@@ -24,10 +24,6 @@ const playerSchema = Schema({
       maxLength: [255, "Panjang nama haru 3 - 255 karakter"],
       minLength: [3, "Panjang nama haru 3 - 255 karakter"]
    },
-   phoneNumber: {
-      type: Number,
-      require: [true, 'No Telpon harus di isi!']
-   },
    role: {
       type: String,
       enum: ['admin', 'user'],
@@ -44,7 +40,7 @@ const playerSchema = Schema({
       type: String
    },
    phoneNumber: {
-      type: String,
+      type: Number,
       require: [true, "Phone Number harus di isi!"],
       maxLength: [13, "Panjang nama haru 11 - 13 karakter"],
       minLength: [11, "Panjang nama haru 11 - 13 karakter"]

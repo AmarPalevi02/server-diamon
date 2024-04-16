@@ -19,7 +19,6 @@ const isLoginPlayer = async (req, res, next) => {
       const data = jwt.verify(token, config.jwtkey)
 
       const player = await Player.findOne({ _id: data.player.id})
-      console.log({player})
 
       if (!player) {
          throw new Error()
