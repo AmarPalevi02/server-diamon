@@ -69,6 +69,9 @@ const checout = async (req, res) => {
       const res_bank = await Bank.findOne({ _id: bank })
       if (!res_bank) return res.status(404).json({ message: 'Bank tidak di temukan!' })
 
+      let tax = (10 / 100) * res_nominal._doc.price
+      let value = res_nominal._doc.price - tax
+
       const payload = {
          historyVoucherTopup: {
             gameName: res_voucher._doc.name,
@@ -79,12 +82,28 @@ const checout = async (req, res) => {
             price: res_nominal._doc.price
          },
          historyPayment: {
-            name: { type: String, require: [true, 'Nama harus di isi!'] },
-            type: { type: String, require: [true, 'Type pembayaran wajib di isi!'] },
-            bankName: { type: String, require: [true, 'Nama Bank harus di isi!'] },
-            noRekening: { type: String, require: [true, 'Nama Bank harus di isi!'] }
+            name: res_payment._doc.name,
+            type: res_payment._doc.type,
+            bankName: res_payment._doc.bankName,
+            noRekening: res_payment._doc.noRekening
          },
+
+         name: name,
+         accountUser: accountUser,
+         tax: tax,
+         value: value,
+         // player: req.player._id,
+
+         historyUser: {
+            name: res_voucher._doc.user?._id,
+            phonrNumber: res_voucher._doc.user?.phonrNumber
+         },
+
+         category: res_voucher._doc.category?._id,
+         user: res_voucher._doc.user?._id,
       }
+
+      res.status(201).json({data: payload})
    } catch (error) {
 
    }
