@@ -1,13 +1,14 @@
 const Player = require('./model')
 const Categories = require('../categories/model')
+const Voucher = require('../voucher/model')
+const Nominal = require('../nominal/model')
+const Payment = require('../payment/model')
+const Bank = require('../bank/model')
+
 const { getAll, getDetail } = require('../services/player')
 
 const index = async (req, res, next) => {
    try {
-      // const alertMessage = req.flash('alertMessage')
-      // const alertStatus = req.flash('alertStatus')
-      // const alert = { message: alertMessage, status: alertStatus }
-
       const lendingpage = await getAll()
       res.status(200).json({
          message: 'success',
@@ -48,9 +49,51 @@ const category = async (req, res) => {
    }
 }
 
+const checout = async (req, res) => {
+   try {
+      const { accountUser, name, voucher, nominal, payment, bank } = req.body
+
+      const res_voucher = await Voucher.findOne({ _id: voucher })
+         .select('name category _id thumbnail user')
+         .populate('category')
+         .populate('user')
+
+      if (!res_voucher) return res.status(404).json({ message: 'vocher tidak di temukan!' })
+
+      const res_nominal = await Nominal.findOne({ _id: nominal })
+      if (!res_nominal) return res.status(404).json({ message: 'Nominal tidak di temukan!' })
+
+      const res_payment = await Payment.findOne({ _id: payment })
+      if (!res_payment) return res.status(404).json({ message: 'Payment tidak di temukan!' })
+
+      const res_bank = await Bank.findOne({ _id: bank })
+      if (!res_bank) return res.status(404).json({ message: 'Bank tidak di temukan!' })
+
+      const payload = {
+         historyVoucherTopup: {
+            gameName: res_voucher._doc.name,
+            category: res_voucher._doc.category ? res_voucher._doc.category.name : '-',
+            thumbnail: res_voucher._doc.category.thumbnail,
+            coinName: res_nominal._doc.coinName,
+            coinQuantity: res_nominal._doc.coinQuantity,
+            price: res_nominal._doc.price
+         },
+         historyPayment: {
+            name: { type: String, require: [true, 'Nama harus di isi!'] },
+            type: { type: String, require: [true, 'Type pembayaran wajib di isi!'] },
+            bankName: { type: String, require: [true, 'Nama Bank harus di isi!'] },
+            noRekening: { type: String, require: [true, 'Nama Bank harus di isi!'] }
+         },
+      }
+   } catch (error) {
+
+   }
+}
+
 module.exports = {
    index,
    detail,
-   category
+   category,
+   checout
 }
 
