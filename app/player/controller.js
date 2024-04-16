@@ -92,11 +92,11 @@ const checout = async (req, res) => {
          accountUser: accountUser,
          tax: tax,
          value: value,
-         // player: req.player._id,
+         player: req.player._id,
 
          historyUser: {
             name: res_voucher._doc.user?._id,
-            phonrNumber: res_voucher._doc.user?.phonrNumber
+            phoneNumber: res_voucher._doc.user?.phoneNumber
          },
 
          category: res_voucher._doc.category?._id,
